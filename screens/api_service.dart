@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:assistech/models/models.dart';
 import 'package:assistech/models/shared_preferences_service.dart';
 import 'package:http/http.dart' as http;
+import 'appconfig.dart';
 
 class ApiService {
   final String baseUrl;
@@ -12,7 +13,7 @@ class ApiService {
 
   Future<Map<String, dynamic>> login(String rut, String password) async {
   final response = await http.post(
-    Uri.parse('$baseUrl/login'),
+     Uri.parse('${AppConfig.baseUrl}/login'),
     body: jsonEncode({'rut': rut, 'password': password}),
     headers: {'Content-Type': 'application/json'},
   );
@@ -49,7 +50,7 @@ class ApiService {
 
   Future<Map<String, dynamic>> register(String rut, String password, String roleId) async {
     final response = await http.post(
-      Uri.parse('http://192.168.100.81:3000/register'), // Asegúrate de que esta es la ruta correcta para tu endpoint de registro
+      Uri.parse('${AppConfig.baseUrl}/register'), // Asegúrate de que esta es la ruta correcta para tu endpoint de registro
       body: jsonEncode({'rut': rut, 'password': password, 'roleId': roleId}),
       headers: {'Content-Type': 'application/json'},
     );
@@ -63,7 +64,7 @@ class ApiService {
 
    Future<List<dynamic>> getRoles() async {
     final response = await client.get(
-      Uri.parse('http://192.168.100.81:3000/get-roles'), // Usa la ruta correcta para tu endpoint de roles
+      Uri.parse('${AppConfig.baseUrl}/get-roles'), // Usa la ruta correcta para tu endpoint de roles
     );
 
     if (response.statusCode == 200) {
@@ -75,7 +76,7 @@ class ApiService {
 
   Future<List<Sala>> getSalas() async {
   final response = await client.get(
-    Uri.parse('http://192.168.100.81:3000/get-salas'),
+    Uri.parse('${AppConfig.baseUrl}/get-salas'),
   );
 
   if (response.statusCode == 200) {
@@ -90,7 +91,7 @@ class ApiService {
 
 Future<List<Materia>> getMaterias() async {
   final response = await client.get(
-    Uri.parse('http://192.168.100.81:3000/get-materias'),
+    Uri.parse('${AppConfig.baseUrl}/get-materias'),
   );
 
   if (response.statusCode == 200) {
@@ -104,7 +105,7 @@ Future<List<Materia>> getMaterias() async {
 
 Future<int?> crearClaseProgramada(int salaId, int materiaId, int profesorId) async {
   final response = await client.post(
-    Uri.parse('http://192.168.100.81:3000/crear-clase-programada'),
+    Uri.parse('${AppConfig.baseUrl}/crear-clase-programada'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -130,7 +131,7 @@ Future<int?> crearClaseProgramada(int salaId, int materiaId, int profesorId) asy
 
 Future<SalaDetails> getSalaDetails(String salaId) async {
     final response = await client.get(
-      Uri.parse('http://192.168.100.81:3000/salaDetails/$salaId'),
+      Uri.parse('${AppConfig.baseUrl}/salaDetails/$salaId'),
     );
 
     if (response.statusCode == 200) {
@@ -144,7 +145,7 @@ Future<SalaDetails> getSalaDetails(String salaId) async {
 
   Future<void> registrarAsistencia(int estudianteId, int claseProgramadaId) async {
   final response = await client.post(
-    Uri.parse('http://192.168.100.81:3000/registrar-asistencia'),
+    Uri.parse('${AppConfig.baseUrl}/registrar-asistencia'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -163,7 +164,7 @@ Future<SalaDetails> getSalaDetails(String salaId) async {
 Future<Map<String, dynamic>> registersala(String codigo, String nombre,
     double latitude, double longitude, double radius) async {
   final response = await http.post(
-    Uri.parse('http://192.168.100.81:3000/register-sala'),
+    Uri.parse('${AppConfig.baseUrl}/register-sala'),
     body: jsonEncode({
       'codigo': codigo,
       'nombre': nombre,
@@ -182,7 +183,7 @@ Future<Map<String, dynamic>> registersala(String codigo, String nombre,
 }
 
 Future<Map<String, dynamic>> registermateria(String nombre) async {
-  final url = Uri.parse('http://192.168.100.81:3000/register-materia');
+  final url = Uri.parse('${AppConfig.baseUrl}/register-materia');
   final headers = {'Content-Type': 'application/json'};
   final body = jsonEncode({'nombre': nombre});
 
@@ -199,7 +200,7 @@ Future<Map<String, dynamic>> registermateria(String nombre) async {
 
 Future<int?> crearChequeo(int estudianteId, int claseProgramadaId) async {
   final response = await client.post(
-    Uri.parse('http://192.168.100.81:3000/crear-chequeo'), // Usa tu dirección IP y puerto correctos
+    Uri.parse('${AppConfig.baseUrl}/crear-chequeo'), // Usa tu dirección IP y puerto correctos
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -220,7 +221,7 @@ Future<int?> crearChequeo(int estudianteId, int claseProgramadaId) async {
 
 Future<void> actualizarChequeo(int chequeoId) async {
   final response = await client.put(
-    Uri.parse('http://192.168.100.81:3000/actualizar-chequeo'), // Asegúrate de que esta es la ruta correcta para tu endpoint de actualizar chequeo
+    Uri.parse('${AppConfig.baseUrl}/actualizar-chequeo'), 
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -237,7 +238,7 @@ Future<void> actualizarChequeo(int chequeoId) async {
 Future<List<Asistencia>> filtrarAsistenciaPorFecha(String fecha) async {
     int profesorId = await _sharedPreferencesService.getProfesorId();
     final response = await client.get(
-      Uri.parse('http://192.168.100.81:3000/filtrar-asistencia/fecha?fecha=$fecha&profesor_id=$profesorId'),
+      Uri.parse('${AppConfig.baseUrl}/filtrar-asistencia/fecha?fecha=$fecha&profesor_id=$profesorId'),
       headers: {'Content-Type': 'application/json'},
     );
 
@@ -252,7 +253,7 @@ Future<List<Asistencia>> filtrarAsistenciaPorFecha(String fecha) async {
  Future<List<Asistencia>> filtrarAsistenciaPorMateria(String nombreMateria) async {
     int profesorId = await _sharedPreferencesService.getProfesorId();
     final response = await client.get(
-      Uri.parse('http://192.168.100.81:3000/filtrar-asistencia/materia?nombre_materia=$nombreMateria&profesor_id=$profesorId'),
+      Uri.parse('${AppConfig.baseUrl}/filtrar-asistencia/materia?nombre_materia=$nombreMateria&profesor_id=$profesorId'),
       headers: {'Content-Type': 'application/json'},
     );
 
@@ -268,7 +269,7 @@ Future<List<Asistencia>> filtrarAsistenciaPorFecha(String fecha) async {
 Future<List<Asistencia>> filtrarAsistenciaPorSala(String codigoSala) async {
     int profesorId = await _sharedPreferencesService.getProfesorId();
     final response = await client.get(
-      Uri.parse('http://192.168.100.81:3000/filtrar-asistencia/sala?codigo_sala=$codigoSala&profesor_id=$profesorId'),
+      Uri.parse('${AppConfig.baseUrl}/filtrar-asistencia/sala?codigo_sala=$codigoSala&profesor_id=$profesorId'),
       headers: {'Content-Type': 'application/json'},
     );
 
@@ -292,7 +293,7 @@ Future<List<Asistencia>> filtrarAsistenciaCombinada({
     if (sala != null && sala.isNotEmpty) 'sala': sala,
     'profesor_id': profesorId.toString(),
   };
-  var uri = Uri.parse('http://192.168.100.81:3000/filtrar-asistencia').replace(queryParameters: queryParams);
+  var uri = Uri.parse('${AppConfig.baseUrl}/filtrar-asistencia').replace(queryParameters: queryParams);
   final response = await client.get(uri, headers: {'Content-Type': 'application/json'});
 
   if (response.statusCode == 200) {

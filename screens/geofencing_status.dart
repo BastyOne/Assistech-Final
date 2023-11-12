@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:assistech/screens/appconfig.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:assistech/models/shared_preferences_service.dart';
@@ -32,7 +33,7 @@ class _GeoFencingMonitorScreenState extends State<GeoFencingMonitorScreen> {
   void initState() {
     super.initState();
     _sharedPreferencesService = SharedPreferencesService();
-    apiService = ApiService("http://192.168.100.81:3000", http.Client()); // Inicializa el ApiService con la URL base
+    apiService = ApiService(AppConfig.baseUrl, http.Client()); // Inicializa el ApiService con la URL base
     _loadGeofenceDetails();
     _startPositionStream();
   }

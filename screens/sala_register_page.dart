@@ -1,3 +1,4 @@
+import 'package:assistech/screens/appconfig.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -31,7 +32,7 @@ class _SalaRegisterPageState extends State<SalaRegisterPage> {
 
   Future<bool> _registerSala() async {
     if (_formKey.currentState!.validate()) {
-      final String url = 'http://192.168.1.110:3000/registersala';
+      final String url = '${AppConfig.baseUrl}/registersala';
       final response = await http.post(
         Uri.parse(url),
         headers: {'Content-Type': 'application/json'},

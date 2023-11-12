@@ -1,4 +1,5 @@
 import 'package:assistech/screens/api_service.dart';
+import 'package:assistech/screens/appconfig.dart';
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:http/http.dart' as http;
@@ -34,7 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
         try {
           final apiService =
-              ApiService('http://192.168.100.81:3000', http.Client());
+              ApiService(AppConfig.baseUrl, http.Client());
           final response =
               await apiService.register(rut!, password!, roleId!);
 
@@ -105,7 +106,7 @@ class _RegisterPageState extends State<RegisterPage> {
   void fetchRoles() async {
     try {
       final apiService =
-          ApiService('http://192.168.100.81:3000', http.Client());
+          ApiService(AppConfig.baseUrl, http.Client());
       final response = await apiService.getRoles();
 
       setState(() {

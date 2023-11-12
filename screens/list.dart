@@ -1,3 +1,4 @@
+import 'package:assistech/screens/appconfig.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:assistech/screens/api_service.dart';
@@ -9,7 +10,7 @@ class FiltrarAsistenciaScreen extends StatefulWidget {
 }
 
 class _FiltrarAsistenciaScreenState extends State<FiltrarAsistenciaScreen> {
-  final ApiService _apiService = ApiService('http://192.168.100.81:3000', http.Client());
+  final ApiService _apiService = ApiService(AppConfig.baseUrl, http.Client());
   final TextEditingController _materiaController = TextEditingController();
   final TextEditingController _fechaController = TextEditingController();
   final TextEditingController _salaController = TextEditingController();

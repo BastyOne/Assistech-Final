@@ -1,3 +1,4 @@
+import 'package:assistech/screens/appconfig.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -45,7 +46,7 @@ class GeoFence {
     };
 
     final response = await http.post(
-      Uri.parse('http://192.168.100.81:3000/registrar-geofence'),
+      Uri.parse('${AppConfig.baseUrl}/registrar-geofence'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

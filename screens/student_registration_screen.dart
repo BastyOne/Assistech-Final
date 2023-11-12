@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:assistech/models/shared_preferences_service.dart';
 import 'package:assistech/screens/api_service.dart';
+import 'package:assistech/screens/appconfig.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -32,7 +33,7 @@ class _StudentRegistrationScreenState extends State<StudentRegistrationScreen> {
   final TextEditingController _rutController = TextEditingController();
   final TextEditingController _correoController = TextEditingController();
   final ApiService apiService =
-      ApiService("http://192.168.100.81:3000", http.Client());
+      ApiService(AppConfig.baseUrl, http.Client());
 
   StreamController<bool> geofenceStreamController = StreamController<bool>();
 
@@ -137,7 +138,7 @@ class _StudentRegistrationScreenState extends State<StudentRegistrationScreen> {
       };
 
       final response = await http.post(
-        Uri.parse('http://192.168.100.81:3000/registrar-estudiante'),
+        Uri.parse('${AppConfig.baseUrl}/registrar-estudiante'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

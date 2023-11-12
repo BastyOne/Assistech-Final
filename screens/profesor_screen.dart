@@ -1,5 +1,5 @@
 import 'package:assistech/screens/list.dart';
-import 'package:assistech/screens/profesor_schedule_page.dart.dart';
+import 'package:assistech/screens/profesor_schedule_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:assistech/models/shared_preferences_service.dart';
@@ -25,7 +25,7 @@ class _ProfesorScreenState extends State<ProfesorScreen> {
       context,
       MaterialPageRoute(builder: (context) => FiltrarAsistenciaScreen()),
     );
-  } else if (index == 2) { // Esto ya estaba en tu código original para "Generar QR"
+  } else if (index == 2) { 
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const ProfesorSchedulePage()),

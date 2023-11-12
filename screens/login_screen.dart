@@ -1,5 +1,6 @@
 import 'package:assistech/screens/admin_panel.dart';
 import 'package:assistech/screens/api_service.dart';
+import 'package:assistech/screens/appconfig.dart';
 import 'package:assistech/screens/profesor_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   String? password;
 
   final ApiService apiService =
-      ApiService('http://192.168.100.81:3000', http.Client());
+      ApiService(AppConfig.baseUrl, http.Client());
 
   void loginButtonPressed() async {
     if (globalFormKey.currentState!.validate()) {

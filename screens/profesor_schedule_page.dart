@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:assistech/screens/appconfig.dart';
 import 'package:flutter/material.dart';
 import 'package:assistech/screens/api_service.dart';
 import 'package:flutter/services.dart';
@@ -16,7 +17,7 @@ class ProfesorSchedulePage extends StatefulWidget {
 }
 
 class _ProfesorSchedulePageState extends State<ProfesorSchedulePage> {
-  final ApiService apiService = ApiService('http://192.168.100.81:3000', http.Client());
+  final ApiService apiService = ApiService(AppConfig.baseUrl, http.Client());
 
   String? selectedSalaName;
   int? selectedSalaId;

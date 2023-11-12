@@ -1,3 +1,4 @@
+import 'package:assistech/screens/appconfig.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -29,7 +30,7 @@ class _MateriaRegisterPageState extends State<MateriaRegisterPage> {
       return;
     }
 
-    final String url = 'http://192.168.1.110:3000/register-materia';
+    final String url = '${AppConfig.baseUrl}/register-materia';
     final response = await http.post(
       Uri.parse(url),
       headers: {'Content-Type': 'application/json'},
