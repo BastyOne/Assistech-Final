@@ -115,7 +115,7 @@ class _FiltrarAsistenciaScreenState extends State<FiltrarAsistenciaScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Filtrar Asistencia',
+          'Lista de Asistencia',
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.white,
