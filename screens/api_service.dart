@@ -330,13 +330,15 @@ class SalaDetails {
 class Sala {
   final String nombre;
   final int id;
+   final String codigo; 
 
-  Sala({required this.nombre, required this.id});
+   Sala({required this.nombre, required this.id, required this.codigo});
 
   factory Sala.fromJson(Map<String, dynamic> json) {
     return Sala(
       nombre: json['nombre'],
       id: json['id'],
+      codigo: json['codigo'],
     );
   }
 }

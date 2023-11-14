@@ -1,12 +1,14 @@
 import 'package:assistech/screens/appconfig.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:assistech/screens/api_service.dart';
 import 'package:http/http.dart' as http;
 
 class FiltrarAsistenciaScreen extends StatefulWidget {
   @override
-  _FiltrarAsistenciaScreenState createState() => _FiltrarAsistenciaScreenState();
+  _FiltrarAsistenciaScreenState createState() =>
+      _FiltrarAsistenciaScreenState();
 }
 
 class _FiltrarAsistenciaScreenState extends State<FiltrarAsistenciaScreen> {
@@ -15,6 +17,7 @@ class _FiltrarAsistenciaScreenState extends State<FiltrarAsistenciaScreen> {
   final TextEditingController _fechaController = TextEditingController();
   final TextEditingController _salaController = TextEditingController();
   List<Asistencia> _asistencias = [];
+  bool _mostrarTabla = false;
 
   @override
   void dispose() {
@@ -30,18 +33,67 @@ class _FiltrarAsistenciaScreenState extends State<FiltrarAsistenciaScreen> {
     String sala = _salaController.text;
 
     try {
-      List<Asistencia> resultados = await _apiService.filtrarAsistenciaCombinada(
+      List<Asistencia> resultados =
+          await _apiService.filtrarAsistenciaCombinada(
         materia: materia.isNotEmpty ? materia : null,
         fecha: fecha.isNotEmpty ? fecha : null,
         sala: sala.isNotEmpty ? sala : null,
       );
       setState(() {
         _asistencias = resultados;
+        _mostrarTabla = true;
       });
     } catch (e) {
+      setState(() {
+        _mostrarTabla = false; // Oculta la tabla si hay un error
+      });
+
       // Maneja el error aquí, por ejemplo mostrando un snackbar o un dialog
       print('Error al filtrar asistencias: $e');
     }
+  }
+
+  Future<void> _showMateriaDialog() async {
+    final materias = await _apiService.getMaterias();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: const Text('Selecciona una materia'),
+          children: materias.map((materia) {
+            return SimpleDialogOption(
+              onPressed: () {
+                _materiaController.text = materia.nombre;
+                Navigator.pop(context);
+              },
+              child: Text(materia.nombre),
+            );
+          }).toList(),
+        );
+      },
+    );
+  }
+
+  Future<void> _showSalaDialog() async {
+    final salas = await _apiService.getSalas();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: const Text('Selecciona una sala'),
+          children: salas.map((sala) {
+            return SimpleDialogOption(
+              onPressed: () {
+                _salaController.text = sala
+                    .codigo; // Asegúrate de que 'codigo' es el atributo correcto
+                Navigator.pop(context);
+              },
+              child: Text(sala.nombre),
+            );
+          }).toList(),
+        );
+      },
+    );
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -62,23 +114,36 @@ class _FiltrarAsistenciaScreenState extends State<FiltrarAsistenciaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Filtrar Asistencia'),
+        title: Text(
+          'Filtrar Asistencia',
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        elevation: 0,
       ),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: _materiaController,
-                decoration: InputDecoration(
-                  labelText: 'Materia',
-                  suffixIcon: Icon(Icons.book),
+              padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+              child: GestureDetector(
+                onTap: _showMateriaDialog,
+                child: AbsorbPointer(
+                  child: TextField(
+                    controller: _materiaController,
+                    decoration: InputDecoration(
+                      labelText: 'Materia',
+                      suffixIcon: Icon(Icons.arrow_drop_down),
+                    ),
+                  ),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
               child: GestureDetector(
                 onTap: () => _selectDate(context),
                 child: AbsorbPointer(
@@ -93,32 +158,49 @@ class _FiltrarAsistenciaScreenState extends State<FiltrarAsistenciaScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: _salaController,
-                decoration: InputDecoration(
-                  labelText: 'Sala',
-                  suffixIcon: Icon(Icons.meeting_room),
+              padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+              child: GestureDetector(
+                onTap: _showSalaDialog,
+                child: AbsorbPointer(
+                  child: TextField(
+                    controller: _salaController,
+                    decoration: InputDecoration(
+                      labelText: 'Sala',
+                      suffixIcon: Icon(Icons.arrow_drop_down),
+                    ),
+                  ),
                 ),
               ),
             ),
             ElevatedButton(
               onPressed: _filtrarAsistencia,
               child: Text('Buscar'),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white, backgroundColor: Colors.black, // Color del texto
+              ),
             ),
-            _asistencias.isNotEmpty
-                ? ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: _asistencias.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(_asistencias[index].nombreEstudiante),
-                        subtitle: Text(DateFormat('yyyy-MM-dd – kk:mm').format(_asistencias[index].fechaHora)),
-                      );
-                    },
+            _mostrarTabla
+                ? SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: DataTable(
+                      columns: const [
+                        DataColumn(label: Text('Nombre Estudiante')),
+                        DataColumn(label: Text('Fecha de Entrada')),
+                      ],
+                      rows: _asistencias
+                          .map<DataRow>(
+                            (asistencia) => DataRow(
+                              cells: [
+                                DataCell(Text(asistencia.nombreEstudiante)),
+                                DataCell(Text(DateFormat('yyyy-MM-dd – kk:mm')
+                                    .format(asistencia.fechaHora))),
+                              ],
+                            ),
+                          )
+                          .toList(),
+                    ),
                   )
-                : Text('No hay resultados para mostrar', style: TextStyle(fontSize: 18)),
+                : Container(),
           ],
         ),
       ),
