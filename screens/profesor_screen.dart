@@ -102,7 +102,7 @@ class _ProfesorScreenState extends State<ProfesorScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Bienvenido a la Pantalla Profesor de Geofencing',
+                'Bienvenido a la Pantalla Profesor de Assistech',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20.0,
@@ -139,7 +139,7 @@ class _ProfesorScreenState extends State<ProfesorScreen> {
   AppBar appBar() {
     return AppBar(
       title: const Text(
-        'Bienvenido a Assistech',
+        'Assistech',
         style: TextStyle(
           color: Colors.black,
           fontSize: 18,

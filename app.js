@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = 3000; // Puedes cambiar el puerto según tus preferencias
@@ -5,6 +6,8 @@ const db = require('./db'); // Importa la conexión a la base de datos
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const moment = require('moment');
+
+
 
 app.use(express.json());
 

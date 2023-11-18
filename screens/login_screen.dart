@@ -150,7 +150,7 @@ class _LoginPageState extends State<LoginPage> {
               bottom: 30,
               top: 50,
             ),
-            child: Text('Iniciar Sesion',
+            child: Text('Inicio de Sesion',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
@@ -161,10 +161,10 @@ class _LoginPageState extends State<LoginPage> {
           FormHelper.inputFieldWidget(
             context,
             'rut',
-            'Rut',
+            'Rut sin puntos ni guion',
             (onValidateVal) {
               if (onValidateVal.isEmpty) {
-                return 'Rut can\'t be empty';
+                return 'Rut no puede estar vacio';
               }
               return null;
             },
@@ -183,10 +183,10 @@ class _LoginPageState extends State<LoginPage> {
             child: FormHelper.inputFieldWidget(
               context,
               'password',
-              'Password',
+              'Contraseña',
               (onValidateVal) {
                 if (onValidateVal.isEmpty) {
-                  return 'Password can\'t be empty';
+                  return 'Contraseña no puede estar vacio';
                 }
                 return null;
               },
@@ -225,7 +225,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   children: <TextSpan>[
                     TextSpan(
-                      text: 'Forget Password?',
+                      text: '',
                       style: const TextStyle(
                           color: Colors.black,
                           decoration: TextDecoration.underline,
@@ -244,7 +244,7 @@ class _LoginPageState extends State<LoginPage> {
             height: 20,
           ),
           FormHelper.submitButton(
-            'Login',
+            'Ingresar',
             loginButtonPressed, // Función presionable aquí
             btnColor: Colors.white,
             borderColor: Colors.black,

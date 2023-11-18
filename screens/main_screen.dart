@@ -102,7 +102,7 @@ class _GeoFencingScreenState extends State<GeoFencingScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Bienvenido a la Pantalla de Geofencing',
+                'Bienvenido a la Pantalla estudiante de Geofencing',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20.0,
@@ -139,7 +139,7 @@ class _GeoFencingScreenState extends State<GeoFencingScreen> {
   AppBar appBar() {
     return AppBar(
       title: const Text(
-        'Bienvenido a Assistech',
+        'Assistech',
         style: TextStyle(
           color: Colors.black,
           fontSize: 18,

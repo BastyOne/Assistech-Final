@@ -1,12 +1,17 @@
-// db.js
+require('dotenv').config(); 
+
+
 const mysql = require('mysql2');
+// Cargar variables de entorno desde un archivo .env
 
 const connection = mysql.createConnection({
-  host: 'localhost', // Cambia esto al host de tu base de datos MySQL
-  user: 'root', // Cambia esto a tu usuario de MySQL
-  password: '', // Cambia esto a tu contraseña de MySQL
-  database: 'assistech' // Cambia esto al nombre de tu base de datos
+  host: process.env.DB_HOST || '127.0.0.1',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_DATABASE || 'assistech',
+  port: process.env.DB_PORT || 3306,
 });
+
 
 connection.connect((err) => {
   if (err) {
@@ -17,3 +22,5 @@ connection.connect((err) => {
 });
 
 module.exports = connection;
+
+
