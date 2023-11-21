@@ -160,6 +160,7 @@ class _ProfesorSchedulePageState extends State<ProfesorSchedulePage> {
                     _selectSala(context);
                   },
                   readOnly: true,
+                  controller: TextEditingController(text: selectedSalaName),
                   decoration: InputDecoration(
                     labelText: 'Sala',
                     labelStyle: TextStyle(color: Colors.black),
@@ -186,6 +187,7 @@ class _ProfesorSchedulePageState extends State<ProfesorSchedulePage> {
                     _selectMateria(context);
                   },
                   readOnly: true,
+                  controller: TextEditingController(text: selectedMateria),
                   decoration: InputDecoration(
                     labelText: 'Materia',
                     labelStyle: TextStyle(color: Colors.black),

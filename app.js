@@ -434,6 +434,48 @@ app.get('/filtrar-asistencia', (req, res) => {
   });
 });
 
+app.delete('/eliminar-usuario/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  const deleteQuery = 'DELETE FROM usuarios WHERE id = ?';
+  db.query(deleteQuery, [userId], (err, results) => {
+    if (err) {
+      console.error('Error al eliminar usuario: ' + err.message);
+      return res.status(500).json({ error: 'Error al eliminar usuario' });
+    }
+    console.log(`Usuario con ID: ${userId} eliminado con éxito`);
+    res.status(200).json({ message: 'Usuario eliminado con éxito' });
+  });
+});
+
+app.delete('/eliminar-sala/:salaId', (req, res) => {
+  const salaId = req.params.salaId;
+
+  const deleteQuery = 'DELETE FROM salas WHERE id = ?';
+  db.query(deleteQuery, [salaId], (err, results) => {
+    if (err) {
+      console.error('Error al eliminar sala: ' + err.message);
+      return res.status(500).json({ error: 'Error al eliminar sala' });
+    }
+    console.log(`Sala con ID: ${salaId} eliminada con éxito`);
+    res.status(200).json({ message: 'Sala eliminada con éxito' });
+  });
+});
+
+app.delete('/eliminar-materia/:materiaId', (req, res) => {
+  const materiaId = req.params.materiaId;
+
+  const deleteQuery = 'DELETE FROM materias WHERE id = ?';
+  db.query(deleteQuery, [materiaId], (err, results) => {
+    if (err) {
+      console.error('Error al eliminar materia: ' + err.message);
+      return res.status(500).json({ error: 'Error al eliminar materia' });
+    }
+    console.log(`Materia con ID: ${materiaId} eliminada con éxito`);
+    res.status(200).json({ message: 'Materia eliminada con éxito' });
+  });
+});
+
 
 
 
